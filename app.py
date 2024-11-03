@@ -63,7 +63,7 @@ def contact():
     if not name or not email or not message:
         return jsonify({"error": "All fields are required."}), 400
 
-    msg_to_recipient = Message('Contact Form Message', recipients=['majeabdullah402@gmail.com'])
+    msg_to_recipient = Message('Contact Form Message', recipients=['info@asustudio.org'])
     msg_to_recipient.body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
 
     msg_to_sender = Message('Thank you for contacting us!', recipients=[email])
