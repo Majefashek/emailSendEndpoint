@@ -77,9 +77,10 @@ def contact():
     try:
         mail.send(msg_to_recipient)
         mail.send(msg_to_sender)
-        return jsonify({"message": "Message sent successfully"}), 200
+        return jsonify({"success":True
+                        ,"message": "Message sent successfully"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"success":False,"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
