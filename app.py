@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,Response
 from flask_mail import Mail, Message
 from flasgger import Swagger, swag_from
 from decouple import config
+import json
 
 app = Flask(__name__)
 
@@ -77,10 +78,26 @@ def contact():
     try:
         mail.send(msg_to_recipient)
         mail.send(msg_to_sender)
-        return jsonify({"success":True
-                        ,"message": "Message sent successfully"}), 200
+        response_data = {
+            "success": True,
+            "message": "Message sent successfully"
+        }
+        return Response(
+            response=json.dumps(response_data),
+            status=200,
+            mimetype="application/json"
+        )
     except Exception as e:
-        return jsonify({"success":False,"error": str(e)}), 500
+        error_data = {
+            "success": False,
+            "error": "Failed to send message",
+            "details": str(e)
+        }
+        return Response(
+            response=json.dumps(error_data),
+            status=500,
+            mimetype="application/json"
+        )
 
 if __name__ == '__main__':
     app.run(debug=True)
